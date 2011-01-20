@@ -1,0 +1,7 @@
+inserting text! to do so... how? -> ESC i (insert mode)
+to delete lines: ESC dd
+to delete set number of lines: ESC d# (# = num lines)
+to undo: ESC u
+to save file: ':w file.ext'
+to save and quit: ':wq'
+to quit WITHOUT SAVING ':q!'
