@@ -1,0 +1,7 @@
+mkdir comp206
+cd comp206
+mkdir archive
+mkdir backup
+mkdir build
+mkdir data
+
