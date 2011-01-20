@@ -3,8 +3,9 @@ COUNT=0
 NUM=$#
 if [ 1 -gt $# ]; then
 	#copy entire folder
-	echo "Copying the entire folder."
+	echo "Copying the entire folder..."
 	cp -r . ../backup
+	echo "done."
 else
 	echo "You gave me files: $@"
 	args=("$@") # makin a quick array 
