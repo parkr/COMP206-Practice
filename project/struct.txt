@@ -1,4 +1,5 @@
 mkdir public_html
+chmod 755 public_html
 mkdir comp206
 cd comp206
 mkdir archive
