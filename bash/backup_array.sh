@@ -13,8 +13,7 @@ else
 	until [ $COUNT -ge $NUM ]; do
 		FILENUM=$(($COUNT+1))
                 echo "Backing up file $FILENUM: ${args[$COUNT]}"
-                cp $1 ../backup/$1
+                cp ${args[$COUNT]} ../backup/${args[$COUNT]}
                 let COUNT=COUNT+1
-		shift 1
 	done
 fi
