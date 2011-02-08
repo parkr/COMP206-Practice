@@ -1,5 +1,3 @@
-/***** THERE SEEMS TO BE A PROBLEMO WITH THIS ONE. SAYS "data" AND "next" ARE NOT PART OF THE STRUCT *****/
-
 /* This example can be found on page 114 of Software Systems by J. Vybihal */
 #include <stdio.h>
 #include <stdlib.h>
