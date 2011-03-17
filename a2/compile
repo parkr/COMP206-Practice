@@ -1,0 +1,75 @@
+#! /bin/bash
+
+function usage {
+	echo "Usage:"
+	echo "     bash compile -o filename --clean --backup --archive --help cfilenames"
+	# The "--" before each option whose name is longer than one character is by convention.
+	# You'll see in my case statement below that I'll accept either, 
+	# becuase the assignment states that I should accept arguments with only one "-"
+}
+
+COUNT=0
+NUM=$#
+C_FILENAMES=""
+NUM_C=0
+ARCHIVE_FILE="archive.tar"
+if [ 1 -gt $# ]; then
+	# Syntax error... require "-o filename.out"!
+	echo "Syntax error: too few arguments ('-o filename' is required)" >&2 # prints to standard error
+	usage
+else
+	#echo "You gave me argument(s): $@"
+	args=("$@") # makin a quick array!
+	until [ $COUNT -ge $NUM ]; do
+		case ${args[$COUNT]} in
+			-o)
+				OUT_NAME=${args[$COUNT+1]}
+				;;
+			--clean|-clean)
+				TO_CLEAN=true
+				;;
+			--backup|-backup)
+				TO_BACKUP=true
+				;;
+			--archive|-archive)
+				TO_ARCHIVE=true
+				;;
+			--help|-help)
+				usage
+				;;
+			*.c)
+				C_FILENAMES="${C_FILENAMES} ${args[$COUNT]}"
+				let NUM_C=NUM_C+1
+				# Neat concatenating trick!
+				;;
+			-)
+				echo "illegal"
+				;;
+		esac
+        let COUNT=COUNT+1
+	done
+	gcc -o ${OUT_NAME} ${C_FILENAMES}
+	if [ $TO_ARCHIVE ]; then
+		echo -n "Archiving... "
+		tar -cf $ARCHIVE_FILE ${C_FILENAMES}
+		mv $ARCHIVE_FILE ../backup/$ARCHIVE_FILE
+		echo -e "done."
+	fi
+	if [ $TO_BACKUP ]; then
+		echo -n "Backing up ${NUM_C} file(s)... "
+		c_files=("${C_FILENAMES}")
+		COUNT_B=0
+		until [ $COUNT_B -ge $NUM_C ]; do
+				# adding the trailing "/ /" eliminates whitespace!
+				cp ${c_files[$COUNT_B]/ /} ../backup/${c_files[$COUNT_B]/ /}
+				let COUNT_B=COUNT_B+1
+		done
+		echo "done."
+	fi
+	if [ $TO_CLEAN ]; then
+		echo "Cleaning... removing ${OUT_NAME}"
+		rm $OUT_NAME
+	fi
+	#echo "c filenames: ${C_FILENAMES}"
+	#echo "'out' filename: ${OUT_NAME}"
+fi
